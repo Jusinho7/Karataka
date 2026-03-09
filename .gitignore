@@ -1,0 +1,12 @@
+# Compiled files
+*.rpyc
+*.pyc
+
+# Logs && save
+game/saves/*
+game/log.txt
+game/errors.txt
+
+# OS
+.DS_Store
+Thumbs.db
