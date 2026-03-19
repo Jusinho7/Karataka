@@ -1,4 +1,14 @@
+import { useEffect, useState } from "react";
+
 function WorldSection() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 600);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const zones = [
     {
       icon: "🏡",
@@ -22,16 +32,24 @@ function WorldSection() {
     },
   ];
 
+  const gradients = [
+    "linear-gradient(160deg, #3D2000, #7A3500)",
+    "linear-gradient(160deg, #1A2800, #3D5A00)",
+    "linear-gradient(160deg, #00102A, #002A5A)",
+    "linear-gradient(160deg, #1A0028, #3D0A5A)",
+  ];
+
   return (
     <section
       id="monde"
       style={{
         background: "var(--nuit)",
-        padding: "100px 48px",
+        padding: isMobile ? "60px 20px" : "100px 48px",
         position: "relative",
         overflow: "hidden",
       }}
     >
+      {/* Ligne décorative */}
       <div
         style={{
           position: "absolute",
@@ -44,6 +62,7 @@ function WorldSection() {
         }}
       />
 
+      {/* Glow ambiant */}
       <div
         style={{
           position: "absolute",
@@ -59,7 +78,9 @@ function WorldSection() {
       />
 
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: 64 }}>
+
+        {/* Header */}
+        <div style={{ textAlign: "center", marginBottom: isMobile ? 36 : 64 }}>
           <div
             style={{
               fontFamily: "'Cormorant Garamond', serif",
@@ -76,7 +97,7 @@ function WorldSection() {
           <h2
             style={{
               fontFamily: "'Cinzel', serif",
-              fontSize: "clamp(28px, 5vw, 52px)",
+              fontSize: "clamp(24px, 5vw, 52px)",
               color: "var(--creme)",
               fontWeight: 700,
               marginBottom: 20,
@@ -88,11 +109,12 @@ function WorldSection() {
             style={{
               fontFamily: "'Cormorant Garamond', serif",
               color: "rgba(245,236,215,0.6)",
-              fontSize: 18,
+              fontSize: isMobile ? 15 : 18,
               maxWidth: 600,
               margin: "0 auto",
               lineHeight: 1.7,
               fontStyle: "italic",
+              padding: isMobile ? "0 8px" : 0,
             }}
           >
             Un village vivant, inspiré des paysages autour d'Antananarivo.
@@ -100,10 +122,11 @@ function WorldSection() {
           </p>
         </div>
 
+        {/* Grid des zones */}
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
+            gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)",
             gap: 3,
           }}
         >
@@ -112,15 +135,8 @@ function WorldSection() {
               key={i}
               style={{
                 position: "relative",
-                height: 200,
-                background:
-                  i === 0
-                    ? "linear-gradient(160deg, #3D2000, #7A3500)"
-                    : i === 1
-                      ? "linear-gradient(160deg, #1A2800, #3D5A00)"
-                      : i === 2
-                        ? "linear-gradient(160deg, #00102A, #002A5A)"
-                        : "linear-gradient(160deg, #1A0028, #3D0A5A)",
+                height: isMobile ? 150 : 200,
+                background: gradients[i],
                 overflow: "hidden",
                 cursor: "pointer",
                 transition: "all 0.3s",
@@ -139,19 +155,21 @@ function WorldSection() {
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "flex-end",
-                  padding: 28,
+                  padding: isMobile ? 20 : 28,
                   background:
                     "linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%)",
                 }}
               >
-                <div style={{ fontSize: 32, marginBottom: 8 }}>{z.icon}</div>
+                <div style={{ fontSize: isMobile ? 26 : 32, marginBottom: 6 }}>
+                  {z.icon}
+                </div>
                 <div
                   style={{
                     fontFamily: "'Cinzel', serif",
                     color: "var(--creme)",
-                    fontSize: 16,
+                    fontSize: isMobile ? 14 : 16,
                     fontWeight: 700,
-                    marginBottom: 6,
+                    marginBottom: 4,
                   }}
                 >
                   {z.name}
@@ -160,7 +178,7 @@ function WorldSection() {
                   style={{
                     fontFamily: "'Cormorant Garamond', serif",
                     color: "rgba(245,236,215,0.65)",
-                    fontSize: 14,
+                    fontSize: isMobile ? 13 : 14,
                     lineHeight: 1.5,
                   }}
                 >

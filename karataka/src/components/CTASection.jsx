@@ -1,29 +1,39 @@
+import { useEffect, useState } from "react";
 import Stars from "./Stars";
 import DustParticles from "./DustParticles";
 
 function CTASection() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 480);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <section
       style={{
         position: "relative",
         background:
           "linear-gradient(180deg, #150A06 0%, #0D0805 50%, #3A1060 100%)",
-        padding: "120px 48px",
+        padding: isMobile ? "72px 20px" : "120px 48px",
         textAlign: "center",
         overflow: "hidden",
       }}
     >
-      <Stars count={40} />
-      <DustParticles count={12} />
+      <Stars count={isMobile ? 20 : 40} />
+      <DustParticles count={isMobile ? 6 : 12} />
 
+      {/* Glow central */}
       <div
         style={{
           position: "absolute",
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: 500,
-          height: 500,
+          width: isMobile ? 280 : 500,
+          height: isMobile ? 280 : 500,
           background:
             "radial-gradient(circle, rgba(193,68,14,0.06) 0%, transparent 70%)",
           borderRadius: "50%",
@@ -32,12 +42,14 @@ function CTASection() {
       />
 
       <div style={{ position: "relative", zIndex: 2 }}>
+
+        {/* Étiquette */}
         <div
           style={{
             fontFamily: "'Cormorant Garamond', serif",
             fontStyle: "italic",
             color: "var(--or)",
-            fontSize: 14,
+            fontSize: isMobile ? 12 : 14,
             letterSpacing: "0.35em",
             textTransform: "uppercase",
             marginBottom: 20,
@@ -47,10 +59,11 @@ function CTASection() {
           Rejoignez l'Aventure
         </div>
 
+        {/* Titre */}
         <h2
           style={{
             fontFamily: "'Cinzel', serif",
-            fontSize: "clamp(36px, 7vw, 72px)",
+            fontSize: "clamp(32px, 7vw, 72px)",
             color: "var(--creme)",
             fontWeight: 900,
             lineHeight: 1.05,
@@ -63,27 +76,31 @@ function CTASection() {
           <span style={{ color: "var(--or)" }}>Commence Ici</span>
         </h2>
 
+        {/* Citation */}
         <p
           style={{
             fontFamily: "'Cormorant Garamond', serif",
             color: "rgba(245,236,215,0.6)",
-            fontSize: 20,
+            fontSize: isMobile ? 16 : 20,
             maxWidth: 500,
-            margin: "0 auto 48px",
+            margin: "0 auto 40px",
             lineHeight: 1.7,
             fontStyle: "italic",
+            padding: isMobile ? "0 8px" : 0,
           }}
         >
           « La terre est une richesse. Mais seule la sagesse la transforme en
           prospérité. »
         </p>
 
+        {/* Boutons */}
         <div
           style={{
             display: "flex",
-            gap: 16,
+            flexDirection: isMobile ? "column" : "row",
+            gap: 12,
             justifyContent: "center",
-            flexWrap: "wrap",
+            alignItems: "center",
           }}
         >
           <button
@@ -95,12 +112,14 @@ function CTASection() {
               color: "var(--nuit)",
               background: "linear-gradient(135deg, #F0B429 0%, #C1440E 100%)",
               border: "none",
-              padding: "18px 52px",
+              padding: isMobile ? "14px 36px" : "18px 52px",
               borderRadius: 2,
               cursor: "pointer",
               textTransform: "uppercase",
               boxShadow: "0 10px 40px rgba(240,180,41,0.3)",
               transition: "all 0.3s",
+              width: isMobile ? "100%" : "auto",
+              maxWidth: isMobile ? 280 : "none",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = "scale(1.06)";
@@ -124,11 +143,13 @@ function CTASection() {
               color: "var(--or-pale)",
               background: "transparent",
               border: "1px solid rgba(240,180,41,0.4)",
-              padding: "18px 52px",
+              padding: isMobile ? "14px 36px" : "18px 52px",
               borderRadius: 2,
               cursor: "pointer",
               textTransform: "uppercase",
               transition: "all 0.3s",
+              width: isMobile ? "100%" : "auto",
+              maxWidth: isMobile ? 280 : "none",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = "rgba(240,180,41,0.08)";

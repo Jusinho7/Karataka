@@ -2,26 +2,37 @@ import { useState, useEffect } from "react";
 import Stars from "./Stars";
 import DustParticles from "./DustParticles";
 import s14Background from "../assets/s14.jpeg";
-
+ 
 function Hero() {
   const [loaded, setLoaded] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
+  const [isTablet, setIsTablet] = useState(window.innerWidth <= 768);
+ 
   useEffect(() => {
     setTimeout(() => setLoaded(true), 100);
+ 
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 480);
+      setIsTablet(window.innerWidth <= 768);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
-
+ 
   return (
     <section
       style={{
         position: "relative",
         width: "100%",
         height: "100vh",
-        minHeight: 700,
+        minHeight: isMobile ? 600 : 700,
         overflow: "hidden",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
       }}
     >
+      {/* Background image */}
       <div
         style={{
           position: "absolute",
@@ -34,7 +45,8 @@ function Hero() {
           filter: "brightness(0.6) contrast(1.1) blur(1px)",
         }}
       />
-
+ 
+      {/* Gradient overlay */}
       <div
         style={{
           position: "absolute",
@@ -44,18 +56,19 @@ function Hero() {
           pointerEvents: "none",
         }}
       />
-
+ 
       <Stars />
-      <DustParticles count={20} />
-
+      <DustParticles count={isMobile ? 8 : 20} />
+ 
+      {/* Sun glow */}
       <div
         style={{
           position: "absolute",
           top: "38%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: 160,
-          height: 160,
+          width: isMobile ? 100 : 160,
+          height: isMobile ? 100 : 160,
           borderRadius: "50%",
           background:
             "radial-gradient(circle, #FFF8C0 0%, #F7C948 35%, #FF6B35 65%, transparent 100%)",
@@ -63,7 +76,8 @@ function Hero() {
             "0 0 120px 60px rgba(247,180,41,0.25), 0 0 200px 100px rgba(200,68,14,0.15)",
         }}
       />
-
+ 
+      {/* Grain noise */}
       <div
         style={{
           position: "absolute",
@@ -74,24 +88,29 @@ function Hero() {
           animation: "grain 0.5s steps(1) infinite",
         }}
       />
-
+ 
+      {/* Content */}
       <div
         style={{
           position: "relative",
           zIndex: 5,
           textAlign: "center",
-          paddingBottom: "15%",
+          paddingBottom: isMobile ? "20%" : "15%",
+          paddingLeft: isMobile ? 20 : 0,
+          paddingRight: isMobile ? 20 : 0,
           opacity: loaded ? 1 : 0,
           transition: "opacity 1s ease 0.3s",
+          width: "100%",
         }}
       >
+        {/* Sous-titre */}
         <div
           style={{
             fontFamily: "'Cormorant Garamond', serif",
             fontStyle: "italic",
             color: "var(--or-pale)",
-            fontSize: "clamp(13px, 2vw, 16px)",
-            letterSpacing: "0.4em",
+            fontSize: "clamp(11px, 2vw, 16px)",
+            letterSpacing: isMobile ? "0.2em" : "0.4em",
             textTransform: "uppercase",
             marginBottom: 16,
             opacity: 0.85,
@@ -100,11 +119,12 @@ function Hero() {
         >
           Un récit malgache · Point & Click
         </div>
-
+ 
+        {/* Titre principal */}
         <h1
           style={{
             fontFamily: "'Cinzel', serif",
-            fontSize: "clamp(64px, 12vw, 130px)",
+            fontSize: "clamp(52px, 12vw, 130px)",
             fontWeight: 900,
             color: "var(--or)",
             lineHeight: 0.9,
@@ -117,28 +137,33 @@ function Hero() {
         >
           KARATAKA
         </h1>
-
+ 
+        {/* Tagline */}
         <div
           style={{
             fontFamily: "'Cormorant Garamond', serif",
             fontStyle: "italic",
             color: "var(--creme)",
-            fontSize: "clamp(16px, 3vw, 26px)",
+            fontSize: "clamp(14px, 3vw, 26px)",
             opacity: 0.9,
             letterSpacing: "0.05em",
             animation: "fadeUp 1s ease 0.8s both",
-            marginBottom: 48,
+            marginBottom: isMobile ? 32 : 48,
           }}
         >
           L'Héritage de la Terre Rouge
         </div>
-
+ 
+        {/* Boutons */}
         <div
           style={{
             display: "flex",
-            gap: 16,
+            flexDirection: isMobile ? "column" : "row",
+            gap: 12,
             justifyContent: "center",
+            alignItems: "center",
             animation: "fadeUp 1s ease 1s both",
+            padding: isMobile ? "0 32px" : 0,
           }}
         >
           <button
@@ -150,22 +175,26 @@ function Hero() {
               color: "var(--nuit)",
               background: "linear-gradient(135deg, #F0B429 0%, #C1440E 100%)",
               border: "none",
-              padding: "16px 40px",
+              padding: isMobile ? "14px 32px" : "16px 40px",
               borderRadius: 2,
               cursor: "pointer",
               textTransform: "uppercase",
               boxShadow: "0 8px 32px rgba(240,180,41,0.35)",
               animation: "pulse 2.5s infinite",
               transition: "transform 0.3s",
+              width: isMobile ? "100%" : "auto",
+              maxWidth: isMobile ? 280 : "none",
             }}
             onMouseEnter={(e) =>
               (e.currentTarget.style.transform = "scale(1.06)")
             }
-            onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.transform = "scale(1)")
+            }
           >
             ▶ Jouer Maintenant
           </button>
-
+ 
           <button
             style={{
               fontFamily: "'Cinzel', serif",
@@ -175,12 +204,14 @@ function Hero() {
               color: "var(--or-pale)",
               background: "transparent",
               border: "1px solid rgba(240,180,41,0.5)",
-              padding: "16px 40px",
+              padding: isMobile ? "14px 32px" : "16px 40px",
               borderRadius: 2,
               cursor: "pointer",
               textTransform: "uppercase",
               backdropFilter: "blur(8px)",
               transition: "all 0.3s",
+              width: isMobile ? "100%" : "auto",
+              maxWidth: isMobile ? 280 : "none",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = "rgba(240,180,41,0.1)";
@@ -194,44 +225,49 @@ function Hero() {
             ▷ Voir la Bande-Annonce
           </button>
         </div>
-
-        <div
-          style={{
-            position: "absolute",
-            bottom: -80,
-            left: "50%",
-            transform: "translateX(-50%)",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 8,
-            opacity: 0.5,
-            animation: "fadeIn 1s ease 2s both",
-          }}
-        >
+ 
+        {/* Scroll indicator — caché sur mobile */}
+        {!isMobile && (
           <div
             style={{
-              fontFamily: "'Cinzel', serif",
-              fontSize: 10,
-              letterSpacing: "0.3em",
-              color: "var(--or-pale)",
-              textTransform: "uppercase",
+              position: "absolute",
+              bottom: -80,
+              left: "50%",
+              transform: "translateX(-50%)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 8,
+              opacity: 0.5,
+              animation: "fadeIn 1s ease 2s both",
             }}
           >
-            Défiler
+            <div
+              style={{
+                fontFamily: "'Cinzel', serif",
+                fontSize: 10,
+                letterSpacing: "0.3em",
+                color: "var(--or-pale)",
+                textTransform: "uppercase",
+              }}
+            >
+              Défiler
+            </div>
+            <div
+              style={{
+                width: 1,
+                height: 48,
+                background:
+                  "linear-gradient(to bottom, var(--or), transparent)",
+                animation: "shimmer 2s infinite",
+              }}
+            />
           </div>
-          <div
-            style={{
-              width: 1,
-              height: 48,
-              background: "linear-gradient(to bottom, var(--or), transparent)",
-              animation: "shimmer 2s infinite",
-            }}
-          />
-        </div>
+        )}
       </div>
     </section>
   );
 }
-
+ 
 export default Hero;
+ 

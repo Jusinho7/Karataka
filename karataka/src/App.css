@@ -203,3 +203,12 @@ body {
 .char-card:hover .char-overlay {
   opacity: 1;
 }
+
+/* Mobile */
+@media (max-width: 480px) { }
+
+/* Tablette */
+@media (max-width: 768px) { }
+
+/* Desktop */
+@media (max-width: 1024px) { }

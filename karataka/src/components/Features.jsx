@@ -1,4 +1,14 @@
+import { useEffect, useState } from "react";
+
 function Features() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 480);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const features = [
     {
       icon: "🗺️",
@@ -43,11 +53,12 @@ function Features() {
       id="gameplay"
       style={{
         background: "linear-gradient(180deg, var(--nuit) 0%, #150806 100%)",
-        padding: "100px 48px",
+        padding: isMobile ? "60px 20px" : "100px 48px",
         position: "relative",
         overflow: "hidden",
       }}
     >
+      {/* Ligne décorative */}
       <div
         style={{
           position: "absolute",
@@ -61,7 +72,9 @@ function Features() {
       />
 
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: 64 }}>
+
+        {/* Header */}
+        <div style={{ textAlign: "center", marginBottom: isMobile ? 36 : 64 }}>
           <div
             style={{
               fontFamily: "'Cormorant Garamond', serif",
@@ -79,7 +92,7 @@ function Features() {
           <h2
             style={{
               fontFamily: "'Cinzel', serif",
-              fontSize: "clamp(28px, 5vw, 52px)",
+              fontSize: "clamp(24px, 5vw, 52px)",
               color: "var(--creme)",
               fontWeight: 700,
               lineHeight: 1.1,
@@ -89,11 +102,14 @@ function Features() {
           </h2>
         </div>
 
+        {/* Grid des cards */}
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: 24,
+            gridTemplateColumns: isMobile
+              ? "1fr"
+              : "repeat(auto-fit, minmax(300px, 1fr))",
+            gap: isMobile ? 16 : 24,
           }}
         >
           {features.map((f, i) => (
@@ -105,11 +121,12 @@ function Features() {
                 background: "rgba(255,255,255,0.03)",
                 border: "1px solid rgba(255,255,255,0.06)",
                 borderRadius: 4,
-                padding: "32px 28px",
+                padding: isMobile ? "24px 20px" : "32px 28px",
                 transition: "transform 0.4s ease",
                 overflow: "hidden",
               }}
             >
+              {/* Glow au hover */}
               <div
                 className="card-glow"
                 style={{
@@ -121,6 +138,8 @@ function Features() {
                   pointerEvents: "none",
                 }}
               />
+
+              {/* Barre colorée gauche */}
               <div
                 style={{
                   position: "absolute",
@@ -133,12 +152,14 @@ function Features() {
                 }}
               />
 
-              <div style={{ fontSize: 36, marginBottom: 16 }}>{f.icon}</div>
+              <div style={{ fontSize: isMobile ? 30 : 36, marginBottom: 16 }}>
+                {f.icon}
+              </div>
               <h3
                 style={{
                   fontFamily: "'Cinzel', serif",
                   color: "var(--creme)",
-                  fontSize: 16,
+                  fontSize: isMobile ? 14 : 16,
                   fontWeight: 700,
                   letterSpacing: "0.08em",
                   marginBottom: 12,
@@ -150,8 +171,9 @@ function Features() {
                 style={{
                   fontFamily: "'Cormorant Garamond', serif",
                   color: "rgba(245,236,215,0.65)",
-                  fontSize: 16,
+                  fontSize: isMobile ? 15 : 16,
                   lineHeight: 1.65,
+                  margin: 0,
                 }}
               >
                 {f.desc}

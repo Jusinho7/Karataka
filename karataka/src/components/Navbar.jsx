@@ -1,28 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import uiLogo from "../assets/ui_logo.png";
-
+ 
 function Navbar({ scrolled }) {
   const [showModal, setShowModal] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+ 
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+ 
   const histoires = [
     {
-      titre: "KARATAKA : Rakoto l’Héritage de la Terre Rouge",
-      texte: 
-      `
-      Dans KARATAKA Rakoto l’Héritage de la Terre Rouge, le joueur suit Rakoto, 
-      jeune héritier d’un petit terrain dans les Hautes Terres malgaches, 
+      titre: "KARATAKA : Rakoto l'Héritage de la Terre Rouge",
+      texte: `
+      Dans KARATAKA Rakoto l'Héritage de la Terre Rouge, le joueur suit Rakoto, 
+      jeune héritier d'un petit terrain dans les Hautes Terres malgaches, 
       qui doit transformer une ferme modeste en exploitation prospère. 
       Entre poulailler délabré, terres sèches et marché animé du village, 
       il apprend à gérer ses animaux, cultiver la terre,
       investir dans des outils et diversifier ses productions tout en faisant 
       face à la dette et aux aléas de la nature : pluie, sécheresse, maladies animales 
       ou variations des prix. Guidé par la sagesse de son grand-père et les conseils de
-      sa voisine Rasoa,Rakoto découvre que la richesse ne vient pas seulement de la terre,
+      sa voisine Rasoa, Rakoto découvre que la richesse ne vient pas seulement de la terre,
       mais de la patience, de la stratégie, du travail acharné et de la capacité à écouter 
       et respecter la nature pour construire un avenir solide.
       `,
     },
   ];
-
+ 
   const navBtnStyle = {
     background: "none",
     border: "none",
@@ -38,93 +46,216 @@ function Navbar({ scrolled }) {
     fontWeight: 700,
     transition: "color 0.2s",
   };
-
+ 
+  const links = ["Histoire", "Gameplay", "Personnages", "Monde"];
+ 
   return (
-    <nav
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 100,
-        padding: "16px 48px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        background: scrolled ? "rgba(13,8,5,0.95)" : "transparent",
-        borderBottom: scrolled ? "1px solid rgba(240,180,41,0.15)" : "none",
-        backdropFilter: scrolled ? "blur(12px)" : "none",
-        transition: "all 0.4s ease",
-      }}
-    >
-      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        <img
-          src={uiLogo}
-          alt="Karataka Logo"
+    <>
+      <nav
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 100,
+          padding: isMobile ? "14px 20px" : "16px 48px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          background:
+            scrolled || menuOpen ? "rgba(13,8,5,0.97)" : "transparent",
+          borderBottom:
+            scrolled || menuOpen ? "1px solid rgba(240,180,41,0.15)" : "none",
+          backdropFilter: scrolled || menuOpen ? "blur(12px)" : "none",
+          transition: "all 0.4s ease",
+        }}
+      >
+        {/* Logo */}
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <img
+            src={uiLogo}
+            alt="Karataka Logo"
+            style={{ width: 32, height: 32, objectFit: "contain" }}
+          />
+          <span
+            style={{
+              fontFamily: "'Cinzel', serif",
+              color: "var(--or)",
+              fontSize: 18,
+              fontWeight: 900,
+              letterSpacing: "0.15em",
+            }}
+          >
+            KARATAKA
+          </span>
+        </div>
+ 
+        {/* Desktop — liens */}
+        {!isMobile && (
+          <div style={{ display: "flex", gap: 36 }}>
+            {links.map((l) =>
+              l === "Histoire" ? (
+                <button
+                  key={l}
+                  onClick={() => setShowModal(true)}
+                  className="nav-link"
+                  style={navBtnStyle}
+                >
+                  {l}
+                </button>
+              ) : (
+                <a
+                  key={l}
+                  href={`#${l.toLowerCase()}`}
+                  className="nav-link"
+                  style={navBtnStyle}
+                >
+                  {l}
+                </a>
+              )
+            )}
+          </div>
+        )}
+ 
+        {/* Desktop — bouton studio */}
+        {!isMobile && (
+          <button
+            style={{
+              fontFamily: "'Cinzel', serif",
+              fontSize: 11,
+              letterSpacing: "0.15em",
+              color: "var(--nuit)",
+              background: "linear-gradient(135deg, var(--or), var(--terre))",
+              border: "none",
+              padding: "10px 24px",
+              borderRadius: 2,
+              cursor: "pointer",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              transition: "all 0.3s",
+            }}
+            onMouseEnter={(e) => (e.target.style.transform = "scale(1.05)")}
+            onMouseLeave={(e) => (e.target.style.transform = "scale(1)")}
+          >
+            THE BRAIN STUDIO
+          </button>
+        )}
+ 
+        {/* Mobile — bouton hamburger */}
+        {isMobile && (
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            style={{
+              background: "none",
+              border: "1px solid rgba(240,180,41,0.4)",
+              borderRadius: 4,
+              padding: "6px 10px",
+              cursor: "pointer",
+              display: "flex",
+              flexDirection: "column",
+              gap: 5,
+            }}
+            aria-label="Menu"
+          >
+            {[0, 1, 2].map((i) => (
+              <span
+                key={i}
+                style={{
+                  display: "block",
+                  width: 22,
+                  height: 2,
+                  background: "var(--or)",
+                  borderRadius: 2,
+                  transition: "all 0.3s",
+                  transform:
+                    menuOpen && i === 0
+                      ? "rotate(45deg) translate(5px, 5px)"
+                      : menuOpen && i === 1
+                      ? "scaleX(0)"
+                      : menuOpen && i === 2
+                      ? "rotate(-45deg) translate(5px, -5px)"
+                      : "none",
+                  opacity: menuOpen && i === 1 ? 0 : 1,
+                }}
+              />
+            ))}
+          </button>
+        )}
+      </nav>
+ 
+      {/* Mobile — menu déroulant */}
+      {isMobile && (
+        <div
           style={{
-            width: 32,
-            height: 32,
-            objectFit: "contain",
-          }}
-        />
-        <span
-          style={{
-            fontFamily: "'Cinzel', serif",
-            color: "var(--or)",
-            fontSize: 18,
-            fontWeight: 900,
-            letterSpacing: "0.15em",
+            position: "fixed",
+            top: 61,
+            left: 0,
+            right: 0,
+            zIndex: 99,
+            background: "rgba(13,8,5,0.97)",
+            backdropFilter: "blur(12px)",
+            borderBottom: "1px solid rgba(240,180,41,0.15)",
+            padding: menuOpen ? "24px 20px" : "0 20px",
+            maxHeight: menuOpen ? 400 : 0,
+            overflow: "hidden",
+            transition: "all 0.4s ease",
           }}
         >
-          KARATAKA
-        </span>
-      </div>
-
-      <div style={{ display: "flex", gap: 36 }}>
-        {["Histoire", "Gameplay", "Personnages", "Monde"].map((l) =>
-          l === "Histoire" ? (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 24,
+            }}
+          >
+            {links.map((l) =>
+              l === "Histoire" ? (
+                <button
+                  key={l}
+                  onClick={() => {
+                    setShowModal(true);
+                    setMenuOpen(false);
+                  }}
+                  style={{ ...navBtnStyle, fontSize: 16, textAlign: "left" }}
+                >
+                  {l}
+                </button>
+              ) : (
+                <a
+                  key={l}
+                  href={`#${l.toLowerCase()}`}
+                  onClick={() => setMenuOpen(false)}
+                  style={{ ...navBtnStyle, fontSize: 16 }}
+                >
+                  {l}
+                </a>
+              )
+            )}
+ 
+            {/* Bouton studio dans le menu mobile */}
             <button
-              key={l}
-              onClick={() => setShowModal(true)}
-              className="nav-link"
-              style={navBtnStyle}
+              style={{
+                fontFamily: "'Cinzel', serif",
+                fontSize: 11,
+                letterSpacing: "0.15em",
+                color: "var(--nuit)",
+                background: "linear-gradient(135deg, var(--or), var(--terre))",
+                border: "none",
+                padding: "12px 24px",
+                borderRadius: 2,
+                cursor: "pointer",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                marginTop: 8,
+              }}
             >
-              {l}
+              THE BRAIN STUDIO
             </button>
-          ) : (
-            <a
-              key={l}
-              href={`#${l.toLowerCase()}`}
-              className="nav-link"
-              style={navBtnStyle}
-            >
-              {l}
-            </a>
-          ),
-        )}
-      </div>
-
-      <button
-        style={{
-          fontFamily: "'Cinzel', serif",
-          fontSize: 11,
-          letterSpacing: "0.15em",
-          color: "var(--nuit)",
-          background: "linear-gradient(135deg, var(--or), var(--terre))",
-          border: "none",
-          padding: "10px 24px",
-          borderRadius: 2,
-          cursor: "pointer",
-          fontWeight: 700,
-          textTransform: "uppercase",
-          transition: "all 0.3s",
-        }}
-        onMouseEnter={(e) => (e.target.style.transform = "scale(1.05)")}
-        onMouseLeave={(e) => (e.target.style.transform = "scale(1)")}
-      >
-        THE BRAIN STUDIO
-      </button>
-
+          </div>
+        </div>
+      )}
+ 
+      {/* Modal Histoire */}
       {showModal && (
         <div
           style={{
@@ -138,6 +269,7 @@ function Navbar({ scrolled }) {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            padding: "20px",
           }}
           onClick={() => setShowModal(false)}
         >
@@ -146,12 +278,14 @@ function Navbar({ scrolled }) {
               background: "#1a0a08",
               border: "1px solid var(--or)",
               borderRadius: 8,
-              padding: 40,
-              minWidth: 320,
+              padding: isMobile ? 24 : 40,
+              width: "100%",
               maxWidth: 500,
               color: "var(--creme)",
               boxShadow: "0 8px 40px rgba(0,0,0,0.5)",
               position: "relative",
+              maxHeight: "80vh",
+              overflowY: "auto",
             }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -176,7 +310,7 @@ function Navbar({ scrolled }) {
               style={{
                 fontFamily: "'Cinzel', serif",
                 color: "var(--or)",
-                fontSize: 24,
+                fontSize: isMobile ? 18 : 24,
                 marginBottom: 24,
                 textAlign: "center",
                 letterSpacing: "0.1em",
@@ -191,7 +325,7 @@ function Navbar({ scrolled }) {
                     style={{
                       fontWeight: 700,
                       color: "var(--or)",
-                      fontSize: 18,
+                      fontSize: isMobile ? 15 : 18,
                       marginBottom: 6,
                     }}
                   >
@@ -213,8 +347,9 @@ function Navbar({ scrolled }) {
           </div>
         </div>
       )}
-    </nav>
+    </>
   );
 }
-
+ 
 export default Navbar;
+ 

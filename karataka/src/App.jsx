@@ -11,6 +11,7 @@ import WorldSection from "./components/WorldSection";
 import PlatformsSection from "./components/PlatformsSection";
 import CTASection from "./components/CTASection";
 import Footer from "./components/Footer";
+import "./responsive.css";
 
 export default function KaratakaSite() {
   const [scrolled, setScrolled] = useState(false);

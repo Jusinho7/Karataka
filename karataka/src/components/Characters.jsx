@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import rakotoImage from "../assets/rakoto_hi.png";
 import rasoaImage from "../assets/rasoa_salut.png";
-
+ 
 function Characters() {
   const [active, setActive] = useState(0);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+ 
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+ 
   const chars = [
     {
       name: "Rakoto",
@@ -45,17 +53,19 @@ function Characters() {
       ],
     },
   ];
+ 
   const c = chars[active];
-
+ 
   return (
     <section
       id="personnages"
       style={{
         background: "linear-gradient(180deg, #150806 0%, #0D0805 100%)",
-        padding: "100px 48px",
+        padding: isMobile ? "60px 20px" : "100px 48px",
         position: "relative",
       }}
     >
+      {/* Ligne décorative */}
       <div
         style={{
           position: "absolute",
@@ -67,9 +77,11 @@ function Characters() {
             "linear-gradient(to right, transparent, rgba(240,180,41,0.3), transparent)",
         }}
       />
-
+ 
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: 64 }}>
+ 
+        {/* Header */}
+        <div style={{ textAlign: "center", marginBottom: isMobile ? 36 : 64 }}>
           <div
             style={{
               fontFamily: "'Cormorant Garamond', serif",
@@ -86,7 +98,7 @@ function Characters() {
           <h2
             style={{
               fontFamily: "'Cinzel', serif",
-              fontSize: "clamp(28px, 5vw, 52px)",
+              fontSize: "clamp(24px, 5vw, 52px)",
               color: "var(--creme)",
               fontWeight: 700,
             }}
@@ -94,13 +106,15 @@ function Characters() {
             Rencontrez l'Humanité du Jeu
           </h2>
         </div>
-
+ 
+        {/* Boutons de sélection */}
         <div
           style={{
             display: "flex",
-            gap: 12,
+            gap: isMobile ? 8 : 12,
             justifyContent: "center",
-            marginBottom: 48,
+            marginBottom: isMobile ? 28 : 48,
+            flexWrap: "wrap",
           }}
         >
           {chars.map((ch, i) => (
@@ -109,7 +123,7 @@ function Characters() {
               onClick={() => setActive(i)}
               style={{
                 fontFamily: "'Cinzel', serif",
-                fontSize: 12,
+                fontSize: isMobile ? 11 : 12,
                 letterSpacing: "0.1em",
                 color: active === i ? "var(--nuit)" : ch.color,
                 background:
@@ -117,7 +131,7 @@ function Characters() {
                     ? `linear-gradient(135deg, ${ch.color}, ${ch.color}AA)`
                     : "transparent",
                 border: `1px solid ${ch.color}60`,
-                padding: "10px 24px",
+                padding: isMobile ? "8px 16px" : "10px 24px",
                 borderRadius: 2,
                 cursor: "pointer",
                 transition: "all 0.3s",
@@ -136,25 +150,27 @@ function Characters() {
             </button>
           ))}
         </div>
-
+ 
+        {/* Card principale */}
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr 2fr",
-            gap: 48,
+            gridTemplateColumns: isMobile ? "1fr" : "1fr 2fr",
+            gap: isMobile ? 32 : 48,
             alignItems: "center",
             background: "rgba(255,255,255,0.02)",
             border: `1px solid ${c.color}30`,
             borderRadius: 4,
-            padding: 48,
+            padding: isMobile ? 24 : 48,
             transition: "border-color 0.5s",
           }}
         >
+          {/* Colonne gauche — avatar */}
           <div style={{ textAlign: "center" }}>
             <div
               style={{
-                width: 160,
-                height: 160,
+                width: isMobile ? 120 : 160,
+                height: isMobile ? 120 : 160,
                 borderRadius: "50%",
                 background: `radial-gradient(circle, ${c.color}20 0%, transparent 70%)`,
                 border: `2px solid ${c.color}50`,
@@ -190,14 +206,15 @@ function Characters() {
                   }}
                 />
               ) : (
-                <span style={{ fontSize: 80 }}>{c.emoji}</span>
+                <span style={{ fontSize: isMobile ? 60 : 80 }}>{c.emoji}</span>
               )}
             </div>
+ 
             <div
               style={{
                 fontFamily: "'Cinzel', serif",
                 color: c.color,
-                fontSize: 22,
+                fontSize: isMobile ? 18 : 22,
                 fontWeight: 700,
                 letterSpacing: "0.1em",
               }}
@@ -216,21 +233,22 @@ function Characters() {
               {c.role}
             </div>
           </div>
-
+ 
+          {/* Colonne droite — description + stats */}
           <div>
             <p
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
                 color: "rgba(245,236,215,0.75)",
-                fontSize: 18,
+                fontSize: isMobile ? 16 : 18,
                 lineHeight: 1.8,
-                marginBottom: 36,
+                marginBottom: isMobile ? 24 : 36,
                 fontStyle: "italic",
               }}
             >
               "{c.desc}"
             </p>
-
+ 
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               {c.stats.map((s) => (
                 <div key={s.label}>
@@ -275,5 +293,5 @@ function Characters() {
     </section>
   );
 }
-
+ 
 export default Characters;
