@@ -14,7 +14,7 @@ function Features() {
       icon: "🗺️",
       title: "Monde Ouvert",
       desc: "Explorez les Hautes Terres malgaches — villages, marchés, rizières en terrasses et routes de latérite.",
-      color: "#5A8A3C",
+      color: "#254F22",
     },
     {
       icon: "💰",
@@ -26,25 +26,25 @@ function Features() {
       icon: "🌿",
       title: "Agriculture & Élevage",
       desc: "Cultivez des terres, élevez poulets, chèvres et zébus. Résistez aux saisons difficiles.",
-      color: "#8FBC5A",
+      color: "#254F22",
     },
     {
       icon: "⚡",
       title: "Énergie Moderne",
       desc: "Installez des panneaux solaires ou des éoliennes pour moderniser votre exploitation.",
-      color: "#87CEEB",
+      color: "#F0B429",
     },
     {
       icon: "🎭",
       title: "Choix Narratifs",
       desc: "Vos décisions façonnent l'histoire. Rivalité amicale avec Rasoa, dette, résilience.",
-      color: "#FFB3C6",
+      color: "#254F22",
     },
     {
       icon: "🎲",
       title: "Événements Aléatoires",
       desc: "Sécheresse, pluies abondantes, maladies animales — chaque partie est unique.",
-      color: "#C1440E",
+      color: "#F0B429",
     },
   ];
 

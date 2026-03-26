@@ -30,7 +30,7 @@ function Characters() {
       name: "Rasoa",
       role: "La Rivale Amicale",
       emoji: "👩🏿‍🌾",
-      color: "#FFB3C6",
+      color: "#254F22",
       desc: "Voisine expérimentée et mentor informel de Rakoto. Elle cultive et élève avec méthode, toujours prête à donner un conseil ou pointer une faiblesse. Sa rivalité bienveillante pousse Rakoto à se dépasser.",
       stats: [
         { label: "Détermination", val: 80 },
@@ -43,7 +43,7 @@ function Characters() {
       name: "Grand-père",
       role: "La Mémoire",
       emoji: "👴🏿",
-      color: "#A8D8A8",
+      color: "#F0B429",
       desc: "Voix du passé qui résonne dans les choix de Rakoto. Sa lettre d'héritage pose les fondements moraux du jeu : la terre n'est pas seulement une ressource, c'est une responsabilité transmise.",
       stats: [
         { label: "Détermination", val: 75 },

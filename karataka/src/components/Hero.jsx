@@ -52,7 +52,7 @@ function Hero() {
           position: "absolute",
           inset: 0,
           background:
-            "linear-gradient(180deg, rgba(13,4,32,0.3) 0%, rgba(58,16,96,0.2) 30%, rgba(139,26,0,0.1) 60%, transparent 100%)",
+            "linear-gradient(180deg, rgba(13,8,5,0.4) 0%, rgba(37,79,34,0.15) 30%, rgba(193,68,14,0.1) 60%, transparent 100%)",
           pointerEvents: "none",
         }}
       />
@@ -172,14 +172,14 @@ function Hero() {
               fontSize: 13,
               letterSpacing: "0.12em",
               fontWeight: 700,
-              color: "var(--nuit)",
-              background: "linear-gradient(135deg, #F0B429 0%, #C1440E 100%)",
+              color: "#fff",
+              background: "linear-gradient(135deg, #254F22 0%, #3d8a38 100%)",
               border: "none",
               padding: isMobile ? "14px 32px" : "16px 40px",
               borderRadius: 2,
               cursor: "pointer",
               textTransform: "uppercase",
-              boxShadow: "0 8px 32px rgba(240,180,41,0.35)",
+              boxShadow: "0 8px 32px rgba(37,79,34,0.35)",
               animation: "pulse 2.5s infinite",
               transition: "transform 0.3s",
               width: isMobile ? "100%" : "auto",
