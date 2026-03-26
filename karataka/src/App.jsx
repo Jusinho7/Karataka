@@ -12,6 +12,8 @@ import Footer from "./components/Footer";
 import "./responsive.css";
 import logoISPM from "./assets/logo_ispm.png";
 import uiLogo from "./assets/ui_logo.png";
+import CustomCursor from "./components/CustomCursor";
+
 function Loader() {
   return (
     <div
@@ -151,6 +153,7 @@ export default function KaratakaSite() {
 
   return (
     <>
+      <CustomCursor />
       {/* Loader */}
       {loading && <Loader />}
 
