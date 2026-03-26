@@ -15,7 +15,7 @@ function CTASection() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/XXXX/exec";
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwS_-7EZYGz7WJoKnR_pSpMshZIbF3bMo1BEx7bD4InBzj4QquS0nsLhOfKpfc1ChS4/exec";
 
   const handleSubmit = async () => {
     if (!formData.nom || !formData.email || !formData.plateforme) return;
