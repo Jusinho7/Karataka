@@ -8,6 +8,9 @@ function CTASection() {
   const [formData, setFormData] = useState({ nom: "", email: "", plateforme: "" });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [count, setCount] = useState(null);
+
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwS_-7EZYGz7WJoKnR_pSpMshZIbF3bMo1BEx7bD4InBzj4QquS0nsLhOfKpfc1ChS4/exec";
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 480);
@@ -15,7 +18,19 @@ function CTASection() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwS_-7EZYGz7WJoKnR_pSpMshZIbF3bMo1BEx7bD4InBzj4QquS0nsLhOfKpfc1ChS4/exec";
+  // Récupérer le compteur depuis Google Sheets
+  useEffect(() => {
+    const fetchCount = async () => {
+      try {
+        const response = await fetch(GOOGLE_SCRIPT_URL);
+        const data = await response.json();
+        setCount(data.count);
+      } catch (error) {
+        console.error("Erreur compteur :", error);
+      }
+    };
+    fetchCount();
+  }, []);
 
   const handleSubmit = async () => {
     if (!formData.nom || !formData.email || !formData.plateforme) return;
@@ -30,6 +45,8 @@ function CTASection() {
       });
 
       setSubmitted(true);
+      // Incrémenter le compteur localement après soumission
+      setCount((prev) => (prev !== null ? prev + 1 : 1));
     } catch (error) {
       alert("Erreur de connexion, réessayez.");
     } finally {
@@ -140,7 +157,7 @@ function CTASection() {
               color: "rgba(245,236,215,0.6)",
               fontSize: isMobile ? 16 : 20,
               maxWidth: 500,
-              margin: "0 auto 40px",
+              margin: "0 auto 32px",
               lineHeight: 1.7,
               fontStyle: "italic",
               padding: isMobile ? "0 8px" : 0,
@@ -148,6 +165,51 @@ function CTASection() {
           >
             « La terre est une richesse. Mais seule la sagesse la transforme en prospérité. »
           </p>
+
+          {/* Compteur de réservations */}
+          {count !== null && (
+            <div style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 10,
+              background: "rgba(37,79,34,0.1)",
+              border: "1px solid rgba(37,79,34,0.3)",
+              borderRadius: 40,
+              padding: "10px 24px",
+              marginBottom: 32,
+            }}>
+              {/* Point animé */}
+              <div style={{
+                width: 8,
+                height: 8,
+                borderRadius: "50%",
+                background: "#3d8a38",
+                boxShadow: "0 0 8px #3d8a38",
+                animation: "pulse 1.5s ease-in-out infinite",
+              }} />
+              <span style={{
+                fontFamily: "'Cinzel', serif",
+                fontSize: isMobile ? 11 : 13,
+                color: "rgba(245,236,215,0.7)",
+                letterSpacing: "0.1em",
+              }}>
+                <strong style={{
+                  color: "#3d8a38",
+                  fontSize: isMobile ? 14 : 16,
+                  filter: "brightness(1.3)",
+                }}>
+                  {count}
+                </strong>
+                {" "}joueur{count > 1 ? "s" : ""} déjà réservé{count > 1 ? "s" : ""}
+              </span>
+              <style>{`
+                @keyframes pulse {
+                  0%, 100% { opacity: 1; transform: scale(1); }
+                  50% { opacity: 0.5; transform: scale(1.3); }
+                }
+              `}</style>
+            </div>
+          )}
 
           {/* Boutons */}
           <div
@@ -189,7 +251,6 @@ function CTASection() {
               ▶ Jouer Gratuitement
             </button>
 
-            {/* Bouton Être Notifié */}
             <button
               onClick={() => setShowModal(true)}
               style={{
@@ -254,7 +315,6 @@ function CTASection() {
               overflowY: "auto",
             }}
           >
-            {/* Bouton fermer */}
             <button
               onClick={handleClose}
               style={{
@@ -275,7 +335,6 @@ function CTASection() {
 
             {!submitted ? (
               <>
-                {/* En-tête */}
                 <div style={{ textAlign: "center", marginBottom: 32 }}>
                   <div style={{
                     fontFamily: "'Cormorant Garamond', serif",
@@ -306,6 +365,24 @@ function CTASection() {
                     borderRadius: 2,
                     filter: "brightness(1.5)",
                   }} />
+
+                  {/* Compteur dans la modal */}
+                  {count !== null && (
+                    <p style={{
+                      fontFamily: "'Cormorant Garamond', serif",
+                      color: "rgba(245,236,215,0.4)",
+                      fontSize: 13,
+                      fontStyle: "italic",
+                      marginBottom: 8,
+                    }}>
+                      Rejoignez les{" "}
+                      <strong style={{ color: "#3d8a38", filter: "brightness(1.3)" }}>
+                        {count}
+                      </strong>
+                      {" "}joueurs déjà inscrits
+                    </p>
+                  )}
+
                   <p style={{
                     fontFamily: "'Cormorant Garamond', serif",
                     color: "rgba(245,236,215,0.5)",
@@ -316,10 +393,7 @@ function CTASection() {
                   </p>
                 </div>
 
-                {/* Formulaire */}
                 <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-
-                  {/* Nom */}
                   <div>
                     <label style={labelStyle}>Nom complet</label>
                     <input
@@ -333,7 +407,6 @@ function CTASection() {
                     />
                   </div>
 
-                  {/* Email */}
                   <div>
                     <label style={labelStyle}>Adresse email</label>
                     <input
@@ -347,7 +420,6 @@ function CTASection() {
                     />
                   </div>
 
-                  {/* Plateforme */}
                   <div>
                     <label style={labelStyle}>Plateforme préférée</label>
                     <select
@@ -365,7 +437,6 @@ function CTASection() {
                     </select>
                   </div>
 
-                  {/* Bouton soumettre */}
                   <button
                     onClick={handleSubmit}
                     disabled={!formData.nom || !formData.email || !formData.plateforme || loading}
@@ -403,12 +474,8 @@ function CTASection() {
                 </div>
               </>
             ) : (
-              /* Message de confirmation */
               <div style={{ textAlign: "center", padding: "20px 0" }}>
-                <div style={{
-                  fontSize: 48,
-                  marginBottom: 16,
-                }}>🌿</div>
+                <div style={{ fontSize: 48, marginBottom: 16 }}>🌿</div>
                 <h2 style={{
                   fontFamily: "'Cinzel', serif",
                   color: "var(--or)",
