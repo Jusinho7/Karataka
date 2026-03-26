@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
+import { useScrollAnimation } from "../hooks/useScrollAnimation";
+import { animStyle } from "../hooks/useAnimationStyle";
 
 function PlatformsSection() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
+  const { ref: titleRef, visible: titleVisible } = useScrollAnimation();
+  const { ref: badgesRef, visible: badgesVisible } = useScrollAnimation();
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 480);
@@ -10,16 +14,16 @@ function PlatformsSection() {
   }, []);
 
   return (
-    <section
-      style={{
-        background: "linear-gradient(180deg, #0D0805 0%, #150A06 100%)",
-        padding: isMobile ? "52px 20px" : "80px 48px",
-        borderTop: "1px solid rgba(240,180,41,0.1)",
-        textAlign: "center",
-      }}
-    >
+    <section style={{
+      background: "linear-gradient(180deg, #0D0805 0%, #150A06 100%)",
+      padding: isMobile ? "52px 20px" : "80px 48px",
+      borderTop: "1px solid rgba(240,180,41,0.1)",
+      textAlign: "center",
+    }}>
+
       {/* Titre */}
       <div
+        ref={titleRef}
         style={{
           fontFamily: "'Cormorant Garamond', serif",
           fontStyle: "italic",
@@ -28,6 +32,7 @@ function PlatformsSection() {
           letterSpacing: "0.3em",
           textTransform: "uppercase",
           marginBottom: 32,
+          ...animStyle(titleVisible),
         }}
       >
         Disponible sur
@@ -35,6 +40,7 @@ function PlatformsSection() {
 
       {/* Badges plateformes */}
       <div
+        ref={badgesRef}
         style={{
           display: "flex",
           gap: isMobile ? 10 : 16,
@@ -49,7 +55,7 @@ function PlatformsSection() {
           { icon: "📱", label: "iOS" },
           { icon: "🤖", label: "Android" },
           { icon: "🖥️", label: "PC" },
-        ].map((p) => (
+        ].map((p, i) => (
           <div
             key={p.label}
             className="platform-badge"
@@ -61,19 +67,17 @@ function PlatformsSection() {
               borderRadius: 2,
               padding: isMobile ? "10px 20px" : "12px 28px",
               cursor: "pointer",
-              transition: "all 0.3s",
               background: "rgba(255,255,255,0.02)",
+              ...animStyle(badgesVisible, { direction: "up", delay: i * 0.1 }),
             }}
           >
             <span style={{ fontSize: isMobile ? 18 : 20 }}>{p.icon}</span>
-            <span
-              style={{
-                fontFamily: "'Cinzel', serif",
-                color: "rgba(245,236,215,0.6)",
-                fontSize: isMobile ? 12 : 13,
-                letterSpacing: "0.1em",
-              }}
-            >
+            <span style={{
+              fontFamily: "'Cinzel', serif",
+              color: "rgba(245,236,215,0.6)",
+              fontSize: isMobile ? 12 : 13,
+              letterSpacing: "0.1em",
+            }}>
               {p.label}
             </span>
           </div>
@@ -81,67 +85,42 @@ function PlatformsSection() {
       </div>
 
       {/* Bandeau défilant */}
-      <div
-        style={{ overflow: "hidden", position: "relative", padding: "20px 0" }}
-      >
-        {/* Fondu gauche */}
-        <div
-          style={{
-            position: "absolute",
-            left: 0,
-            top: 0,
-            bottom: 0,
-            width: isMobile ? 40 : 80,
-            background: "linear-gradient(to right, #150A06, transparent)",
-            zIndex: 2,
-          }}
-        />
-        {/* Fondu droit */}
-        <div
-          style={{
-            position: "absolute",
-            right: 0,
-            top: 0,
-            bottom: 0,
-            width: isMobile ? 40 : 80,
-            background: "linear-gradient(to left, #150A06, transparent)",
-            zIndex: 2,
-          }}
-        />
-
-        {/* Texte défilant */}
-        <div
-          style={{
-            display: "flex",
-            gap: isMobile ? 32 : 60,
-            width: "max-content",
-            animation: "slide 30s linear infinite",
-          }}
-        >
-          {[...Array(2)]
-            .flatMap(() => [
-              "🌿 Un jeu qui célèbre la culture malgache",
-              "🐔 Gérez votre ferme avec sagesse",
-              "💰 Chaque Ariary compte",
-              "🌄 Les Hautes Terres vous attendent",
-              "🎭 Des choix qui façonnent l'histoire",
-              "🌧️ Survivez aux saisons difficiles",
-            ])
-            .map((t, i) => (
-              <span
-                key={i}
-                style={{
-                  fontFamily: "'Cormorant Garamond', serif",
-                  fontStyle: "italic",
-                  color: "rgba(240,180,41,0.4)",
-                  fontSize: isMobile ? 13 : 15,
-                  letterSpacing: "0.05em",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {t}
-              </span>
-            ))}
+      <div style={{ overflow: "hidden", position: "relative", padding: "20px 0" }}>
+        <div style={{
+          position: "absolute", left: 0, top: 0, bottom: 0,
+          width: isMobile ? 40 : 80,
+          background: "linear-gradient(to right, #150A06, transparent)", zIndex: 2,
+        }} />
+        <div style={{
+          position: "absolute", right: 0, top: 0, bottom: 0,
+          width: isMobile ? 40 : 80,
+          background: "linear-gradient(to left, #150A06, transparent)", zIndex: 2,
+        }} />
+        <div style={{
+          display: "flex",
+          gap: isMobile ? 32 : 60,
+          width: "max-content",
+          animation: "slide 30s linear infinite",
+        }}>
+          {[...Array(2)].flatMap(() => [
+            "🌿 Un jeu qui célèbre la culture malgache",
+            "🐔 Gérez votre ferme avec sagesse",
+            "💰 Chaque Ariary compte",
+            "🌄 Les Hautes Terres vous attendent",
+            "🎭 Des choix qui façonnent l'histoire",
+            "🌧️ Survivez aux saisons difficiles",
+          ]).map((t, i) => (
+            <span key={i} style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontStyle: "italic",
+              color: "rgba(240,180,41,0.4)",
+              fontSize: isMobile ? 13 : 15,
+              letterSpacing: "0.05em",
+              whiteSpace: "nowrap",
+            }}>
+              {t}
+            </span>
+          ))}
         </div>
       </div>
     </section>
