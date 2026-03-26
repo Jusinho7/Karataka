@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import Stars from "./Stars";
 import DustParticles from "./DustParticles";
 import s14Background from "../assets/s14.jpeg";
+import trailerVideo from "../assets/trailer.mp4";
 
 function Hero() {
   const [loaded, setLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
   const [isTablet, setIsTablet] = useState(window.innerWidth <= 768);
   const [showComingSoon, setShowComingSoon] = useState(false);
+  const [showTrailer, setShowTrailer] = useState(false);
 
   useEffect(() => {
     setTimeout(() => setLoaded(true), 100);
@@ -169,6 +171,7 @@ function Hero() {
 
             {/* Bouton Bande-Annonce */}
             <button
+              onClick={() => setShowTrailer(true)}
               style={{
                 fontFamily: "'Cinzel', serif",
                 fontSize: 13,
@@ -231,6 +234,137 @@ function Hero() {
         </div>
       </section>
 
+      {/* Modal Trailer */}
+      {showTrailer && (
+        <div
+          onClick={() => setShowTrailer(false)}
+          style={{
+            position: "fixed",
+            top: 0, left: 0,
+            width: "100vw", height: "100vh",
+            background: "rgba(0,0,0,0.95)",
+            zIndex: 9999,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "20px",
+            backdropFilter: "blur(16px)",
+            animation: "fadeIn 0.3s ease",
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: "100%",
+              maxWidth: 900,
+              position: "relative",
+            }}
+          >
+            {/* Header modal */}
+            <div style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: 16,
+            }}>
+              <div>
+                <div style={{
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontStyle: "italic",
+                  color: "var(--or)",
+                  fontSize: 12,
+                  letterSpacing: "0.3em",
+                  textTransform: "uppercase",
+                  opacity: 0.8,
+                }}>
+                  Bande-Annonce Officielle
+                </div>
+                <div style={{
+                  fontFamily: "'Cinzel', serif",
+                  color: "var(--creme)",
+                  fontSize: isMobile ? 16 : 20,
+                  fontWeight: 700,
+                  letterSpacing: "0.1em",
+                }}>
+                  KARATAKA — L'Héritage de la Terre Rouge
+                </div>
+              </div>
+
+              {/* Bouton fermer */}
+              <button
+                onClick={() => setShowTrailer(false)}
+                style={{
+                  background: "rgba(37,79,34,0.2)",
+                  border: "1px solid rgba(37,79,34,0.5)",
+                  borderRadius: "50%",
+                  width: 40, height: 40,
+                  color: "var(--creme)",
+                  fontSize: 20,
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontWeight: 700,
+                  transition: "all 0.3s",
+                  flexShrink: 0,
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(37,79,34,0.5)")}
+                onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(37,79,34,0.2)")}
+              >
+                ×
+              </button>
+            </div>
+
+            {/* Ligne décorative */}
+            <div style={{
+              width: "100%", height: 1,
+              background: "linear-gradient(to right, transparent, rgba(37,79,34,0.6), transparent)",
+              marginBottom: 16,
+            }} />
+
+            {/* Vidéo */}
+            <div style={{
+              position: "relative",
+              width: "100%",
+              paddingTop: "56.25%", // ratio 16:9
+              background: "#000",
+              borderRadius: 4,
+              overflow: "hidden",
+              border: "1px solid rgba(37,79,34,0.4)",
+              boxShadow: "0 0 60px rgba(37,79,34,0.2)",
+            }}>
+              <video
+                autoPlay
+                controls
+                style={{
+                  position: "absolute",
+                  top: 0, left: 0,
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "contain",
+                }}
+              >
+                <source src={trailerVideo} type="video/mp4" />
+                Votre navigateur ne supporte pas la lecture vidéo.
+              </video>
+            </div>
+
+            {/* Note bas */}
+            <p style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontStyle: "italic",
+              color: "rgba(245,236,215,0.25)",
+              fontSize: 12,
+              textAlign: "center",
+              marginTop: 16,
+            }}>
+              Cliquez en dehors pour fermer · KARATAKA © 2026 GreenCode · ISPM
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Modal Coming Soon */}
       {showComingSoon && (
         <div
@@ -264,7 +398,6 @@ function Hero() {
               animation: "fadeUp 0.4s ease",
             }}
           >
-            {/* Bouton fermer */}
             <button
               onClick={() => setShowComingSoon(false)}
               style={{
@@ -279,16 +412,10 @@ function Hero() {
                 filter: "brightness(1.8)",
                 lineHeight: 1,
               }}
-            >
-              ×
-            </button>
+            >×</button>
 
-            {/* Icône */}
-            <div style={{ fontSize: isMobile ? 56 : 72, marginBottom: 24 }}>
-              🌿
-            </div>
+            <div style={{ fontSize: isMobile ? 56 : 72, marginBottom: 24 }}>🌿</div>
 
-            {/* Étiquette */}
             <div style={{
               fontFamily: "'Cormorant Garamond', serif",
               fontStyle: "italic",
@@ -302,7 +429,6 @@ function Hero() {
               En Développement
             </div>
 
-            {/* Titre */}
             <h2 style={{
               fontFamily: "'Cinzel', serif",
               color: "var(--creme)",
@@ -312,12 +438,10 @@ function Hero() {
               marginBottom: 12,
               lineHeight: 1.2,
             }}>
-              Jeu Disponible
-              <br />
+              Jeu Disponible<br />
               <span style={{ color: "var(--or)" }}>Bientôt</span>
             </h2>
 
-            {/* Ligne décorative */}
             <div style={{
               width: 60, height: 2,
               background: "#254F22",
@@ -326,7 +450,6 @@ function Hero() {
               filter: "brightness(1.5)",
             }} />
 
-            {/* Description */}
             <p style={{
               fontFamily: "'Cormorant Garamond', serif",
               color: "rgba(245,236,215,0.65)",
@@ -339,7 +462,6 @@ function Hero() {
               Soyez parmi les premiers à fouler les Hautes Terres malgaches.
             </p>
 
-            {/* Badges statut */}
             <div style={{
               display: "flex",
               gap: 12,
@@ -379,11 +501,9 @@ function Hero() {
               ))}
             </div>
 
-            {/* Bouton être notifié */}
             <button
               onClick={() => {
                 setShowComingSoon(false);
-                // Scroll vers la section CTA
                 document.querySelector("#cta")?.scrollIntoView({ behavior: "smooth" });
               }}
               style={{
@@ -407,7 +527,6 @@ function Hero() {
               🔔 Être Notifié à la Sortie
             </button>
 
-            {/* Note bas */}
             <p style={{
               fontFamily: "'Cormorant Garamond', serif",
               fontStyle: "italic",
