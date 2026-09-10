@@ -23,7 +23,7 @@ export default function Footer() {
             </p>
             <br />
               <img
-                src="/logoIspm.png"
+                src={`${import.meta.env.BASE_URL}logoIspm.png`}
                 alt="Logo ISPM"
                 style={{ width: '72px', height: '72px', objectFit: 'contain', margin: '4px 0' }}
               />

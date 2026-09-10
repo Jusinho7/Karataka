@@ -15,7 +15,7 @@ export default function Community() {
       style={{
         position: 'relative',
         padding: '110px 0',
-        backgroundImage: 'linear-gradient(rgba(5, 10, 6, 0.78), rgba(5, 10, 6, 0.9)), url("/commu.jpeg")',
+        backgroundImage: `linear-gradient(rgba(5, 10, 6, 0.78), rgba(5, 10, 6, 0.9)), url("${import.meta.env.BASE_URL}commu.jpeg")`,
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       }}

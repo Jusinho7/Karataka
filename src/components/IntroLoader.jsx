@@ -21,7 +21,7 @@ export default function IntroLoader() {
     <div className={`intro-loader ${isLeaving ? 'intro-loader--leaving' : ''}`} aria-label="Chargement de Karataka">
       <div className="intro-loader__content">
         <div className="intro-loader__logos">
-          <img className="intro-loader__ispm" src="/logoIspm.png" alt="Logo ISPM" />
+          <img className="intro-loader__ispm" src={`${import.meta.env.BASE_URL}logoIspm.png`} alt="Logo ISPM" />
           <span className="intro-loader__divider" aria-hidden="true" />
           <div className="intro-loader__karataka">
             <Leaf size={42} strokeWidth={1.7} />

@@ -9,7 +9,7 @@ export default function Hero() {
       alignItems: 'center',
       justifyContent: 'center',
       textAlign: 'center',
-      backgroundImage: 'linear-gradient(to bottom, rgba(13, 22, 15, 0.4), rgba(13, 22, 15, 0.95)), url("/menu-principal.png")',
+      backgroundImage: `linear-gradient(to bottom, rgba(13, 22, 15, 0.4), rgba(13, 22, 15, 0.95)), url("${import.meta.env.BASE_URL}menu-principal.png")`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       padding: '0 20px'

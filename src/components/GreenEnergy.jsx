@@ -46,7 +46,7 @@ export default function GreenEnergy() {
 
           <div style={{ position: 'relative' }}>
             <RevealImage 
-              src="/histoire-board.png"
+              src={`${import.meta.env.BASE_URL}histoire-board.png`}
               alt="Panneau d'histoire de Karataka sur l'énergie verte" 
               style={{
                 width: '100%',

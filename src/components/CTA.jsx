@@ -5,7 +5,7 @@ export default function CTA() {
     <section style={{
       padding: '120px 0',
       position: 'relative',
-      backgroundImage: 'linear-gradient(to right, rgba(13, 22, 15, 0.9), rgba(13, 22, 15, 0.8)), url("/loading-screen.png")',
+      backgroundImage: `linear-gradient(to right, rgba(13, 22, 15, 0.9), rgba(13, 22, 15, 0.8)), url("${import.meta.env.BASE_URL}loading-screen.png")`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       textAlign: 'center'

@@ -27,7 +27,7 @@ export default function About() {
             opacity: 0.2
           }}></div>
           <RevealImage 
-            src="/ferme-vue.png"
+            src={`${import.meta.env.BASE_URL}ferme-vue.png`}
             alt="Vue Isométrique de la ferme Karataka" 
             style={{
               width: '100%',

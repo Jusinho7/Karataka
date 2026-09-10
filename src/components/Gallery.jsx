@@ -6,12 +6,12 @@ export default function Gallery() {
   const [selectedImg, setSelectedImg] = useState(null);
 
   const galleryImages = [
-    { src: '/ferme-vue.png', title: 'Exploitation Isométrique', desc: 'Vue générale de la ferme et des moulins' },
-    { src: '/menu-principal.png', title: 'Menu Principal', desc: 'Écran d’accueil de Karataka' },
-    { src: '/interieur-banque.png', title: 'Intérieur de la Banque', desc: 'Exploration et gestion financière' },
-    { src: '/histoire-board.png', title: 'Scénario & Objectifs', desc: 'Contexte et mission verte' },
-    { src: '/options-ui.png', title: 'Paramètres du Jeu', desc: 'Interface des options et audio' },
-    { src: '/loading-screen.png', title: 'Écran de Chargement', desc: 'Charme rustique et pixel-art' }
+    { src: `${import.meta.env.BASE_URL}ferme-vue.png`, title: 'Exploitation Isométrique', desc: 'Vue générale de la ferme et des moulins' },
+    { src: `${import.meta.env.BASE_URL}menu-principal.png`, title: 'Menu Principal', desc: 'Écran d’accueil de Karataka' },
+    { src: `${import.meta.env.BASE_URL}interieur-banque.png`, title: 'Intérieur de la Banque', desc: 'Exploration et gestion financière' },
+    { src: `${import.meta.env.BASE_URL}histoire-board.png`, title: 'Scénario & Objectifs', desc: 'Contexte et mission verte' },
+    { src: `${import.meta.env.BASE_URL}options-ui.png`, title: 'Paramètres du Jeu', desc: 'Interface des options et audio' },
+    { src: `${import.meta.env.BASE_URL}loading-screen.png`, title: 'Écran de Chargement', desc: 'Charme rustique et pixel-art' }
   ];
 
   return (

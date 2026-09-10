@@ -18,7 +18,7 @@ export default function WorldSection() {
         }}>
           <div>
             <RevealImage 
-              src="/interieur-banque.png"
+              src={`${import.meta.env.BASE_URL}interieur-banque.png`}
               alt="Intérieur du bâtiment de la Banque Karataka" 
               style={{
                 width: '100%',
