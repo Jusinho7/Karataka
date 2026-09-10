@@ -28,7 +28,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: karataka
-        run: npm install
+        run: npm ci
 
       - name: Build
         working-directory: karataka

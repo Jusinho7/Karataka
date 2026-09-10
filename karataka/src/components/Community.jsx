@@ -1,11 +1,11 @@
-import { Instagram, MessageCircle, X } from 'lucide-react';
-import { FaTiktok } from 'react-icons/fa';
+import { MessageCircle, X } from 'lucide-react';
+import { FaInstagram, FaTiktok } from 'react-icons/fa';
 
 const socialLinks = [
   { name: 'X', href: 'https://x.com/Jusinho', icon: X },
   { name: 'Discord', href: 'https://discord.com/channels/@me', icon: MessageCircle },
   { name: 'TikTok', href: 'https://www.tiktok.com/@sisih716', icon: FaTiktok },
-  { name: 'Instagram', href: 'https://www.instagram.com/jose_rasul/?hl=en', icon: Instagram }
+  { name: 'Instagram', href: 'https://www.instagram.com/jose_rasul/?hl=en', icon: FaInstagram }
 ];
 
 export default function Community() {
