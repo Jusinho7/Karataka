@@ -1,11 +1,21 @@
+# Karataka
+
+## Supabase
+
+1. Créez un projet Supabase.
+2. Ouvrez le SQL Editor et exécutez [supabase/schema.sql](supabase/schema.sql).
+3. Copiez `.env.example` vers `.env` et renseignez l’URL du projet ainsi que la clé `anon`.
+4. Lancez `npm run dev`.
+
+Sans variables Supabase, le site utilise automatiquement un compteur local dans le navigateur.
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
 ## React Compiler
 

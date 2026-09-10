@@ -1,0 +1,11 @@
+{
+  "initialVisitors": 0,
+  "initialOrders": 0,
+  "emailDomains": [
+    "gmail.com",
+    "yahoo.com",
+    "outlook.com",
+    "hotmail.com",
+    "icloud.com"
+  ]
+}
