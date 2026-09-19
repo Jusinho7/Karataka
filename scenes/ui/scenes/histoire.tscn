@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://bxkk563uljvbn"]
+
+[ext_resource type="Texture2D" uid="uid://d1pt8otlbsb2u" path="res://assets/ui/assets/options_panel/option_bg.jpg" id="1_bg"]
+[ext_resource type="Texture2D" uid="uid://ki5myh8n57et" path="res://assets/ui/assets/options_panel/main_panel.png" id="2_panel"]
+[ext_resource type="FontFile" uid="uid://bw4jh5uos8cnt" path="res://assets/ui/assets/font/Milky Bun.ttf" id="3_font"]
+[ext_resource type="Texture2D" uid="uid://5des67hv0eth" path="res://exit_idle.png" id="6_mm58f"]
+[ext_resource type="Script" uid="uid://c3xpuwet00cjj" path="res://scripts/ui/scripts/return.gd" id="6_return_script"]
+[ext_resource type="Texture2D" uid="uid://2xwl5j0pd6be" path="res://exit_hover.png" id="7_kdytl"]
+[ext_resource type="Script" uid="uid://cqi87lco2g40g" path="res://scripts/ui/scripts/translatable.gd" id="7_tr"]
+[ext_resource type="Script" uid="uid://31do1xjnhik4" path="res://scripts/ui/scripts/hide_scrollbar.gd" id="8_hide_scroll"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_return_normal"]
+texture = ExtResource("6_mm58f")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_return_pressed"]
+texture = ExtResource("7_kdytl")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_return_hover"]
+texture = ExtResource("7_kdytl")
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[node name="histoire" type="Control" unique_id=1790991038]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="background" type="TextureRect" parent="." unique_id=1797731503]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="main_panel" type="TextureRect" parent="." unique_id=403435836]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -411.5
+offset_top = -362.0
+offset_right = 507.5
+offset_bottom = 347.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_panel")
+
+[node name="title" type="Label" parent="main_panel" unique_id=1535386898]
+layout_mode = 0
+offset_left = 77.0
+offset_top = 77.0
+offset_right = 857.0
+offset_bottom = 143.0
+theme_override_colors/font_color = Color(1, 1, 0.34117648, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 48
+text = "STORY"
+horizontal_alignment = 1
+
+[node name="Translator" type="Node" parent="main_panel/title" unique_id=636813713]
+script = ExtResource("7_tr")
+text_key = "UI_STORY_TITLE"
+
+[node name="body_scroll" type="ScrollContainer" parent="main_panel" unique_id=1346051315]
+layout_mode = 0
+offset_left = 81.0
+offset_top = 155.0
+offset_right = 821.0
+offset_bottom = 586.0
+horizontal_scroll_mode = 0
+script = ExtResource("8_hide_scroll")
+
+[node name="body" type="Label" parent="main_panel/body_scroll" unique_id=713906319]
+custom_minimum_size = Vector2(740, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "UI_STORY_BODY"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Translator" type="Node" parent="main_panel/body_scroll/body" unique_id=941390055]
+script = ExtResource("7_tr")
+text_key = "UI_STORY_BODY"
+
+[node name="return" type="Button" parent="." unique_id=463211529]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 37.0
+offset_right = 100.0
+offset_bottom = 110.0
+theme_override_styles/normal = SubResource("StyleBoxTexture_return_normal")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_return_pressed")
+theme_override_styles/hover = SubResource("StyleBoxTexture_return_hover")
+script = ExtResource("6_return_script")
+
+[connection signal="pressed" from="return" to="return" method="_on_return_pressed"]

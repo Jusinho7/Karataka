@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://c5fqu6wet51rk"
+
+[deps]
+
+files=["res://scenes/maps/bank/localization/ui.fr.translation", "res://scenes/maps/bank/localization/ui.en.translation", "res://scenes/maps/bank/localization/ui.mg.translation"]
+
+source_file="res://localization/ui.csv"
+dest_files=["res://scenes/maps/bank/localization/ui.fr.translation", "res://scenes/maps/bank/localization/ui.en.translation", "res://scenes/maps/bank/localization/ui.mg.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true
